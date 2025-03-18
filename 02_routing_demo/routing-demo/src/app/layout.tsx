@@ -11,10 +11,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-100 text-gray-900">
+      <body className="bg-gray-100 text-gray-900 text-7xl">
         <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-4 shadow-md">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center">
-            <h1 className="text-2xl font-bold">My Awesome Site</h1>
+            <h1 className="text-2xl font-bold">Next.js</h1>
           </div>
         </header>
 
@@ -24,7 +24,7 @@ export default function RootLayout({
 
         <footer className="bg-gray-900 text-gray-300 py-6 mt-8">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <p className="text-lg font-semibold">© {new Date().getFullYear()} My Awesome Site</p>
+            <p className="text-lg font-semibold">© {new Date().getFullYear()} Next.js</p>
             <p className="text-sm mt-1">Built with ❤️ using Next.js</p>
           </div>
         </footer>
