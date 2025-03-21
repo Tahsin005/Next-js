@@ -1,5 +1,7 @@
 export const metadata = {
-    title: 'About Cubox',
+    title: {
+        absolute: 'About Cubox',
+    }
 }
 
 export default function About() {
