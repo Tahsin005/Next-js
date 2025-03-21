@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-100 text-gray-900 text-7xl">
+      <body className="bg-gray-100 text-gray-900 text-xl">
         <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-4 shadow-md">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center">
             <h1 className="text-2xl font-bold">Next.js</h1>
