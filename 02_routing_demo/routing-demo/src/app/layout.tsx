@@ -25,7 +25,7 @@ export default function RootLayout({
         <footer className="bg-gray-900 text-gray-300 py-6 mt-8">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
             <p className="text-lg font-semibold">© {new Date().getFullYear()} Next.js</p>
-            <p className="text-sm mt-1">Built with ❤️ using Next.js</p>
+            <p className="text-sm mt-1">Built with ❤️ by `tahsin` using Next.js</p>
           </div>
         </footer>
       </body>
