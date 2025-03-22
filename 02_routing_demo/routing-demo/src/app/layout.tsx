@@ -1,5 +1,6 @@
 import './globals.css'
-import { Metadata } from 'next'
+import { Metadata } from 'next';
+import { ErrorWrapper } from './error-wrapper';
 export const metadata: Metadata = {
   title: {
     default: "Next.js Tutorial - Cubox",
@@ -23,7 +24,9 @@ export default function RootLayout({
         </header>
 
         <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+          {/* <ErrorWrapper> */}
           {children}
+          {/* </ErrorWrapper> */}
         </main>
 
         <footer className="bg-gray-900 text-gray-300 py-6 mt-8">
