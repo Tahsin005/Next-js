@@ -11,7 +11,8 @@
   "dependencies": {
     "next": "15.2.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "uvcanvas": "^0.2.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
