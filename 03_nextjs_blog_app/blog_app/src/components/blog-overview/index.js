@@ -23,6 +23,7 @@ const BlogOverView = ({ blogList }) => {
     const [openBlogDialog, setOpenBlogDialog] = useState(false);
     const [loading, setLoading] = useState(false);
     const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
+    const [currentEditedBlogID, setCurrentEditedBlogID] = useState(null);
 
     const router = useRouter();
 
@@ -33,20 +34,24 @@ const BlogOverView = ({ blogList }) => {
     const handleSaveBlogData = async () => {
         try {
             setLoading(true);
-            const apiResponse = await fetch('/api/add-blog', {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(blogFormData)
-            });
-
+            const apiResponse =
+                currentEditedBlogID !== null
+                ? await fetch(`/api/update-blog?id=${currentEditedBlogID}`, {
+                    method: "PUT",
+                    body: JSON.stringify(blogFormData),
+                    })
+                : await fetch("/api/add-blog", {
+                    method: "POST",
+                    body: JSON.stringify(blogFormData),
+                    });
             const result = await apiResponse.json();
             if (result?.success) {
-                router.refresh();
                 setBlogFormData(initialBlogFormData);
                 setOpenBlogDialog(false);
                 setLoading(false);
+                setCurrentEditedBlogID(null);
+                router.refresh();
             }
-            console.log(result);
         } catch (error) {
             console.log(error);
             setLoading(false);
@@ -67,6 +72,15 @@ const BlogOverView = ({ blogList }) => {
             console.log(e);
         }
     }
+
+    function handleEdit(getCurrentBlog) {
+        setCurrentEditedBlogID(getCurrentBlog?._id);
+        setBlogFormData({
+          title: getCurrentBlog?.title,
+          description: getCurrentBlog?.description,
+        });
+        setOpenBlogDialog(true);
+    }
     return (
         <div className="min-h-screen flex flex-col gap-10 bg-gradient-to-r from-purple-500 to-blue-600 p-6">
             <AddNewBlog
@@ -77,6 +91,8 @@ const BlogOverView = ({ blogList }) => {
                 loading={loading}
                 setLoading={setLoading}
                 handleSaveBlogData={handleSaveBlogData}
+                currentEditedBlogID={currentEditedBlogID}
+                setCurrentEditedBlogID={setCurrentEditedBlogID}
             >
             </AddNewBlog>
 

@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-const AddNewBlog = ({ openBlogDialog, setOpenBlogDialog, blogFormData, setBlogFormData, loading, setLoading, handleSaveBlogData }) => {
+const AddNewBlog = ({ openBlogDialog, setOpenBlogDialog, blogFormData, setBlogFormData, loading, setLoading, handleSaveBlogData, currentEditedBlogID, setCurrentEditedBlogID }) => {
     console.log(blogFormData);
 
     return (
@@ -27,10 +27,15 @@ const AddNewBlog = ({ openBlogDialog, setOpenBlogDialog, blogFormData, setBlogFo
                         title: '',
                         description: ''
                     })
+                    setCurrentEditedBlogID(null);
                 }}>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                        <DialogTitle>Add New Blog</DialogTitle>
+                        <DialogHeader>
+                            <DialogTitle>
+                                {currentEditedBlogID ? "Edit Blog" : "Add New Blog"}{" "}
+                                </DialogTitle>
+                            </DialogHeader>
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
