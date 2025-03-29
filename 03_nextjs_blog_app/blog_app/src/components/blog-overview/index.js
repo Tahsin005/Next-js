@@ -53,6 +53,20 @@ const BlogOverView = ({ blogList }) => {
             setBlogFormData(initialBlogFormData);
         }
     }
+
+    async function handleDeleteBlogByID(getCurrentID) {
+        try {
+            const apiResponse = await fetch(`/api/delete-blog?id=${getCurrentID}`, {
+                method: "DELETE",
+            });
+
+            const result = await apiResponse.json();
+
+            if (result?.success) router.refresh();
+        } catch (e) {
+            console.log(e);
+        }
+    }
     return (
         <div className="min-h-screen flex flex-col gap-10 bg-gradient-to-r from-purple-500 to-blue-600 p-6">
             <AddNewBlog
@@ -65,26 +79,41 @@ const BlogOverView = ({ blogList }) => {
                 handleSaveBlogData={handleSaveBlogData}
             >
             </AddNewBlog>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 {blogList && blogList.length > 0 ? (
                     blogList.map((blogItem, index) => (
-                        <Card className="p-5" Key={index}>
+                        <Card key={index} className="p-5 shadow-lg bg-white">
+                            <CardHeader>
+                                <CardTitle className="text-xl font-bold text-gray-800">
+                                {blogItem?.title}
+                                </CardTitle>
+                            </CardHeader>
                             <CardContent>
-                                <CardTitle className="mb-5">{blogItem?.title}</CardTitle>
-                                <CardDescription>{blogItem?.description}</CardDescription>
-                                <div className="mt-5 flex gap-5  items-center">
-                                    <Button onClick={() => handleEdit(blogItem)}>Edit</Button>
-                                    <Button onClick={() => handleDeleteBlogByID(blogItem._id)}>
+                                <CardDescription className="text-gray-600">
+                                {blogItem?.description}
+                                </CardDescription>
+                                <div className="mt-5 flex gap-4 items-center">
+                                    <Button
+                                        className="bg-blue-500 hover:bg-blue-600 text-white"
+                                        onClick={() => handleEdit(blogItem)}
+                                    >
+                                        Edit
+                                    </Button>
+                                    <Button
+                                        className="bg-red-500 hover:bg-red-600 text-white"
+                                        onClick={() => handleDeleteBlogByID(blogItem._id)}
+                                    >
                                         Delete
                                     </Button>
                                 </div>
                             </CardContent>
                         </Card>
                     ))
-                ) : (
-                    <Label className="text-3xl font-extrabold">
-                        No Blog found! Please add one
-                    </Label>
+                    ) : (
+                        <Label className="text-2xl font-bold text-white text-center">
+                            No Blogs Found! Add a New One 📖
+                        </Label>
                 )}
             </div>
         </div>
