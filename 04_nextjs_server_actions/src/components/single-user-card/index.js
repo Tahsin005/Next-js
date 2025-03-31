@@ -10,8 +10,11 @@ import {
 import { Button } from "../ui/button";
 import { deleteUserAction } from "@/actions";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { UserContext } from "@/context";
 
 function SingleUserCard({ user }) {
+    const {setOpenPopup, setCurrentEditedID, setAddNewUserFormData} = useContext(UserContext);
 
     async function handleDelete(userID) {
       const result = await deleteUserAction(userID, "/user-management");
@@ -21,6 +24,17 @@ function SingleUserCard({ user }) {
       } else {
         toast.error(result?.message);
       }
+    }
+
+    function handleEdit(user) {
+      setOpenPopup(true);
+      setCurrentEditedID(user?._id);
+      setAddNewUserFormData({
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        email: user?.email,
+        address: user?.address,
+      });
     }
     return (
         <Card>

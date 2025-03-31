@@ -1,6 +1,6 @@
 'use client';
 
-import { addNewUserAction } from "@/actions";
+import { addNewUserAction, editUserAction } from "@/actions";
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -13,15 +13,14 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { UserContext } from "@/context";
 import { addNewUserFormControls, addNewUserFormInitialState } from "@/utils";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 
 const AddNewUser = () => {
-    const [openPopup, setOpenPopup] = useState(false);
-    const [addNewUserFormData, setAddNewUserFormData] = useState(addNewUserFormInitialState);
-    console.log(addNewUserFormData);
+    const {openPopup, setOpenPopup, addNewUserFormData, setAddNewUserFormData, currentEditedID, setCurrentEditedID} = useContext(UserContext);
 
     function handleSaveButtonValid() {
         return Object.keys(addNewUserFormData).every(
@@ -29,8 +28,15 @@ const AddNewUser = () => {
         );
     }
 
-    async function handleAddNewUserAction () {
-        const result = await addNewUserAction(addNewUserFormData, "/user-management");
+    async function handleAddNewUserAction() {
+        const result =
+          currentEditedID !== null
+            ? await editUserAction(
+                currentEditedID,
+                addNewUserFormData,
+                "/user-management"
+              )
+            : await addNewUserAction(addNewUserFormData, "/user-management");
         console.log(result);
         if (result?.success) {
             toast.success(result?.message);
@@ -39,6 +45,7 @@ const AddNewUser = () => {
         }
         setOpenPopup(false);
         setAddNewUserFormData(addNewUserFormInitialState);
+        setCurrentEditedID(null);
     }
     return (
         <div>
@@ -46,10 +53,11 @@ const AddNewUser = () => {
             <Dialog open={openPopup} onOpenChange={() => {
                 setOpenPopup(false);
                 setAddNewUserFormData(addNewUserFormInitialState);
+                setCurrentEditedID(null);
             }}>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                        <DialogTitle>Add New User</DialogTitle>
+                        <DialogTitle>{currentEditedID ? "Edit User" : "Add New User"}</DialogTitle>
                     </DialogHeader>
                     <form action={handleAddNewUserAction} className="grid gap-4 py-4">
                             {
