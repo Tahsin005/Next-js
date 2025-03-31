@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { addNewUserFormControls, addNewUserFormInitialState } from "@/utils";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 
 const AddNewUser = () => {
@@ -31,6 +32,11 @@ const AddNewUser = () => {
     async function handleAddNewUserAction () {
         const result = await addNewUserAction(addNewUserFormData, "/user-management");
         console.log(result);
+        if (result?.success) {
+            toast.success(result?.message);
+        } else {
+            toast.error(result?.message);
+        }
         setOpenPopup(false);
         setAddNewUserFormData(addNewUserFormInitialState);
     }

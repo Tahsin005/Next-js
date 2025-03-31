@@ -8,8 +8,20 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
+import { deleteUserAction } from "@/actions";
+import toast from "react-hot-toast";
 
 function SingleUserCard({ user }) {
+
+    async function handleDelete(userID) {
+      const result = await deleteUserAction(userID, "/user-management");
+      console.log(result);
+      if (result?.success) {
+        toast.success(result?.message);
+      } else {
+        toast.error(result?.message);
+      }
+    }
     return (
         <Card>
           <CardHeader>
