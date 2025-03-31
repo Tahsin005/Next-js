@@ -29,7 +29,7 @@ const AddNewUser = () => {
     }
 
     async function handleAddNewUserAction () {
-        const result = await addNewUserAction(addNewUserFormData);
+        const result = await addNewUserAction(addNewUserFormData, "/user-management");
         console.log(result);
         setOpenPopup(false);
         setAddNewUserFormData(addNewUserFormInitialState);
