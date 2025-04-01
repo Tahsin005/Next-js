@@ -100,3 +100,45 @@ export async function loginUserAction(formData) {
         }
     }
 }
+
+
+export async function fetchAuthUserAction() {
+    await connectDB();
+
+    try {
+        const getCookies = await cookies();
+        const token = await getCookies.get("token")?.value || "";
+        if (token === "") {
+            return {
+                success: false,
+                message: "Token is invalid",
+            };
+        }
+
+        const decodedToken = jwt.verify(token, "SUIII");
+        const getUserInfo = await User.findOne({ _id: decodedToken.id });
+
+        if (getUserInfo) {
+            return {
+                success: true,
+                data: JSON.parse(JSON.stringify(getUserInfo)),
+            };
+        } else {
+            return {
+                success: false,
+                message: "Some error occured ! Please try again",
+            };
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            message: "Something went wrong! please try again",
+        };
+    }
+}
+
+export async function logoutAction() {
+    const getCookies = cookies();
+    getCookies.set("token", "");
+}
