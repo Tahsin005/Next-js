@@ -19,7 +19,9 @@ const SignUp = () => {
         );
     }
 
-    async function handleSignUp() {
+    async function handleSignUp(event) {
+        event.preventDefault();
+
         const response = await registerUserAction(signUpFormData);
         if (response.success) {
             toast.success(response.message);
@@ -31,13 +33,15 @@ const SignUp = () => {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
-            <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
-                <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">User Registration</h1>
-                <form action={handleSignUp} className="space-y-4">
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-6 rounded-md">
+            <div className="bg-gray-800 bg-opacity-80 backdrop-blur-lg shadow-2xl rounded-xl p-8 max-w-md w-full transform transition-all hover:scale-105 duration-300">
+                <h1 className="text-4xl font-extrabold text-center mb-6 tracking-tight">
+                    Create Account
+                </h1>
+                <form onSubmit={handleSignUp} className="space-y-6">
                     {userRegistrationFormControls.map((controlItem) => (
-                        <div key={controlItem.name}>
-                            <Label className="block text-gray-700 font-medium mb-2">
+                        <div key={controlItem.name} className="flex flex-col">
+                            <Label className="text-gray-300 mb-2">
                                 {controlItem.label}
                             </Label>
                             <CommonFormElement
@@ -49,13 +53,13 @@ const SignUp = () => {
                                         [event.target.name]: event.target.value,
                                     })
                                 }
-                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="p-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:ring-2 focus:ring-blue-400 transition-all"
                             />
                         </div>
                     ))}
                     <Button
                         disabled={!handleSignUpBtnValid()}
-                        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-65"
+                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 disabled:opacity-50"
                         type="submit"
                     >
                         Sign Up
@@ -64,6 +68,6 @@ const SignUp = () => {
             </div>
         </div>
     );
-}
+};
 
 export default SignUp;
