@@ -1,6 +1,8 @@
 import { fetchAuthUserAction } from "@/actions";
+import Logout from "@/components/log-out";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const currentUser = await fetchAuthUserAction();
@@ -24,6 +26,9 @@ export default async function Home() {
           height={80}
           className="mx-auto opacity-90 bg-white px-4 py-2 rounded-md"
         />
+        <div className="mt-3">
+          <Logout />
+        </div>
       </div>
     </div>
   );
